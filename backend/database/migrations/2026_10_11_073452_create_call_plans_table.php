@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('call_plans', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('call_list_id')->constrained('call_lists')->cascadeOnDelete();
-            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->foreignId('doctor_id')->constrained('master_customers')->cascadeOnDelete();
+            $table->foreignId('call_list_id')->constrained('call_lists')->restrictOnDelete();
+            $table->foreignId('user_id')->constrained('users')->restrictOnDelete();
+            $table->foreignId('doctor_id')->constrained('master_customers')->restrictOnDelete();
             $table->date('plan_date');
             $table->time('plan_time');
             $table->string('status');

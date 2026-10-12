@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\MasterCustomer;
 use Illuminate\Database\Seeder;
 
 class MasterCustomerSeeder extends Seeder
@@ -29,5 +29,14 @@ class MasterCustomerSeeder extends Seeder
             ['dr. Mentari Salsabila, Sp.M',  'Mata',           'Jl. Embun Pagi No. 10, Klinik Mata Dummy, Kota Sampel',              '0800-0000-0014'],
             ['dr. Narendra Satrio, Sp.THT',  'THT',            'Jl. Purnama Tengah No. 17, Klinik THT Contoh, Kota Uji',             '0800-0000-0015'],
         ];
+
+        foreach ($doctors as [$name, $specialization, $address, $phone]) {
+            MasterCustomer::create([
+                'name'           => $name,
+                'specialization' => $specialization,
+                'address'        => $address,
+                'phone'          => $phone,
+            ]);
+        }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\CallListStatus;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -20,8 +21,9 @@ class CallList extends Model
     }
 
     protected $casts = [
-        'period' => 'date',
+        'status'       => CallListStatus::class,
+        'period'       => 'date:Y-m-d',
         'submitted_at' => 'datetime',
-        'decided_at' => 'datetime',
+        'decided_at'   => 'datetime',
     ];
 }

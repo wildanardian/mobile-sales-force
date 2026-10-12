@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('call_list_approvals', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('call_list_id')->constrained('call_lists')->cascadeOnDelete();
-            $table->foreignId('approver_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('call_list_id')->constrained('call_lists')->restrictOnDelete();
+            $table->foreignId('approver_id')->constrained('users')->restrictOnDelete();
             $table->string('decision');
             $table->text('reason')->nullable();
             $table->timestamp('decided_at')->nullable();

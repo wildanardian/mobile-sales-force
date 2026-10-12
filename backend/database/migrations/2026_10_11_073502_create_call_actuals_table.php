@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('call_actuals', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('plan_id')->nullable()->constrained('call_plans')->nullOnDelete();
-            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->foreignId('doctor_id')->constrained('master_customers')->cascadeOnDelete();
+            $table->foreignId('plan_id')->nullable()->constrained('call_plans')->restrictOnDelete();
+            $table->foreignId('user_id')->constrained('users')->restrictOnDelete();
+            $table->foreignId('doctor_id')->constrained('master_customers')->restrictOnDelete();
             $table->date('visit_date');
             $table->time('check_in');
             $table->time('check_out');
@@ -24,6 +24,9 @@ return new class extends Migration
             $table->string('visit_type');
             $table->string('status');
             $table->timestamps();
+
+            $table->unique(['doctor_id', 'visit_date']);
+            $table->index(['user_id', 'visit_date']);
         });
     }
 

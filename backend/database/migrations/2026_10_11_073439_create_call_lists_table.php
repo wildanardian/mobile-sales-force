@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('call_lists', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained('users')->restrictOnDelete();
             $table->date('period');
             $table->string('status');
             $table->timestamp('submitted_at')->nullable();

@@ -78,16 +78,16 @@ class CallListController extends Controller
                 $callList->doctors()->sync($request->doctor_ids);
                 return $callList;
             });
-
-            return ApiResponse::created(
-                new CallListResource($callList->load('doctors')),
-                'CallList berhasil dibuat'
-            );
         } catch (UniqueConstraintViolationException $e) {
             return ApiResponse::error('Call list anda untuk periode ini sudah ada', 409);
         } catch (\Exception $e) {
-            return ApiResponse::error('Terjadi kesalahan saat membuat call list', 500);
+            return ApiResponse::error($e->getMessage(), 500);
         }
+
+        return ApiResponse::created(
+            new CallListResource($callList->load('doctors')),
+            'CallList berhasil dibuat'
+        );
     }
 
     /**
