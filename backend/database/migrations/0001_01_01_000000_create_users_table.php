@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('role');
             $table->foreignId('region_id')->nullable()->constrained('regions')->nullOnDelete();
+            $table->foreignId('manager_id')->nullable()->constrained('users')->restrictOnDelete();
             $table->rememberToken();
             $table->timestamps();
         });
