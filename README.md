@@ -336,7 +336,9 @@ Format respons seragam:
 ## Jawaban atas Tantangan
 
 **1. Double visit lintas jalur**:
+
    **Masalah**: dokter yang sama bisa tercatat dikunjungi dua kali di hari yang sama lewat jalur berbeda (Planned, Unplan, Non Target).
+
    **Solusi**:
    - Backend menolak (409) jika sudah ada Call Actual untuk dokter dan tanggal yang sama.
    - Database menjaga dengan `unique(doctor_id, visit_date)`, jadi aman dari request bersamaan.
@@ -350,6 +352,7 @@ Format respons seragam:
 
 **3. Reject setelah Call Plan dibuat**:
    **Masalah**: jika Call List ditolak setelah Call Plan sudah dibuat dari list tersebut, plan menjadi tidak valid.
+   
    **Solusi**:
    - Call Plan hanya bisa dibuat dari Call List berstatus `approved`.
    - Karena approval hanya satu level (MR→DM, DM→RSM, RSM→MM) dan `approved` bersifat final, list yang sudah memiliki plan tidak bisa ditolak lagi.
