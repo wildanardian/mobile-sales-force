@@ -13,16 +13,15 @@ return new class extends Migration
     {
         Schema::create('call_actuals', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('plan_id')->nullable()->constrained('call_plans')->restrictOnDelete();
+            $table->foreignId('plan_id')->nullable()->unique()->constrained('call_plans')->restrictOnDelete();
             $table->foreignId('user_id')->constrained('users')->restrictOnDelete();
             $table->foreignId('doctor_id')->constrained('master_customers')->restrictOnDelete();
             $table->date('visit_date');
             $table->time('check_in');
             $table->time('check_out');
-            $table->text('photo_url')->nullable();
-            $table->text('signature_url')->nullable();
-            $table->string('visit_type');
-            $table->string('status');
+            $table->text('photo_url');
+            $table->text('signature_url');
+            $table->string('visit_type', 20);
             $table->timestamps();
 
             $table->unique(['doctor_id', 'visit_date']);

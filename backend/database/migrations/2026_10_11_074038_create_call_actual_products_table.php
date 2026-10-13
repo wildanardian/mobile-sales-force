@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('call_actual_products', function (Blueprint $table) {
             $table->foreignId('call_actual_id')->constrained('call_actuals')->cascadeOnDelete();
             $table->foreignId('product_id')->constrained('products')->restrictOnDelete();
+            $table->primary(['call_actual_id', 'product_id']);
             $table->timestamps();
         });
     }
