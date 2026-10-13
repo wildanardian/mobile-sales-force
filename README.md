@@ -352,7 +352,7 @@ Format respons seragam:
 
 **3. Reject setelah Call Plan dibuat**:
    **Masalah**: jika Call List ditolak setelah Call Plan sudah dibuat dari list tersebut, plan menjadi tidak valid.
-   
+
    **Solusi**:
    - Call Plan hanya bisa dibuat dari Call List berstatus `approved`.
    - Karena approval hanya satu level (MR→DM, DM→RSM, RSM→MM) dan `approved` bersifat final, list yang sudah memiliki plan tidak bisa ditolak lagi.
@@ -372,3 +372,19 @@ Format respons seragam:
 
 **5. Konsistensi validasi backend dan frontend**: 
    Backend sumber kebenaran, frontend memvalidasi untuk UX. Format error seragam dan parseError menampilkan pesan dari backend.
+
+**6. Skalabilitas fitur baru (offline mode, GPS)** — (Hanya rancangan untuk implementasi kedepannya)
+
+**Offline mode**
+- Frontend menyimpan Call Actual yang dibuat saat offline di antrean lokal (IndexedDB), dengan status "menunggu sinkronisasi".
+- Setiap item membawa `client_uuid` (idempotency key). Backend menyimpan kolom ini dengan unique constraint, sehingga request yang terkirim ulang tidak membuat data ganda.
+- Saat koneksi kembali, antrean dikirim berurutan. Aturan validasi tetap dijalankan di backend: 409 jika bentrok dengan kunjungan lain, 422 jika data tidak valid. Item yang gagal ditandai agar MR bisa memperbaikinya.
+- Batas 7 hari tetap berlaku berdasarkan `visit_date`, bukan waktu sinkronisasi, sehingga kunjungan offline yang tertunda lama perlu aturan khusus yang disepakati dengan bisnis.
+
+**GPS**
+- Tambah kolom `latitude`, `longitude`, dan `accuracy` (nullable) pada `call_actuals`. Frontend mengambil lokasi dengan Geolocation API saat check-in.
+- Validasi jarak ke lokasi dokter dilakukan di backend (mis. radius tertentu), bukan hanya di frontend, agar tidak mudah dimanipulasi.
+
+**Kesiapan arsitektur saat ini**
+- Validasi terpusat di backend dan `unique(doctor_id, visit_date)` membuat penambahan jalur input baru (offline atau GPS) tidak melemahkan aturan yang ada.
+- Layanan frontend terpisah per fitur sehingga lapisan sinkronisasi bisa ditambahkan tanpa mengubah halaman.
