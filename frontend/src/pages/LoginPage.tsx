@@ -5,7 +5,6 @@ import Button from '../components/ui/Button';
 import MsfLogo from '../components/MsfLogo';
 import DemoRoleCard from '../features/auth/DemoRoleCard';
 import IconInput from '../features/auth/IconInput';
-import LoginBackdrop from '../features/auth/LoginBackdrop';
 import InlineAlert from '../features/shared/InlineAlert';
 import { useAuth } from '../context/AuthContext';
 import { demoAccounts } from '../mocks/demoAccounts';
@@ -71,7 +70,6 @@ export default function LoginPage() {
 
   return (
     <div className="relative mx-auto flex min-h-dvh w-full max-w-[480px] flex-col bg-gradient-to-b from-[#F1FBF9] via-[#F7FDFC] to-[#EEFAF8] px-[33px] md:shadow-sm">
-      <LoginBackdrop />
 
       <header className="relative flex flex-col items-center pt-[127px]">
         <MsfLogo className="h-[76px] w-[76px]" />
